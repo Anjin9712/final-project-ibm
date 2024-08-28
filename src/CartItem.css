@@ -14,7 +14,7 @@
   width: 200px;
   height: 200px;
   /* object-fit: contain; */
-  margin-right: 20px;
+  margin: 20px;
 }
 
 .cart-item-details {
@@ -218,6 +218,7 @@
    }
 .continue_shopping_btn{
   margin-top: -50px;
+  margin-bottom: 2rem;
 }
    @media (max-width: 768px) {
     .cart-container {
@@ -238,6 +239,6 @@
     color: white;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-top: 40px;
+    margin-top: 25px;
   }
   
