@@ -6,12 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 function ProductList() {
   const [showCart, setShowCart] = useState(false);
   const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
+  const [addedToCart, setAddedToCart] = useState({});
   const cart = useSelector((state) => state.cart.items);
-  const addedToCart = cart.length
-    ? cart.reduce((acc, item) => {
-        acc[item.name] = true;
-      }, {})
-    : {};
   const dispatch = useDispatch();
 
   const plantsArray = [
@@ -292,11 +288,11 @@ function ProductList() {
   };
 
   const handleAddToCart = (product) => {
-    if (addedToCart[product.name]) {
-      return;
-    } else {
-      dispatch(addItem(product));
-    }
+    dispatch(addItem(product));
+    setAddedToCart((prevState) => ({
+      ...prevState,
+      [product.name]: true,
+    }));
   };
 
   return (
@@ -375,9 +371,9 @@ function ProductList() {
                       {plant.description}
                     </div>
                     <div className="product-price">{plant.cost}</div>
-
+                    {/*Similarly like the above plant.name show other details like description and cost*/}
                     <button
-                      className={`product-button ${addedToCart[plant.name] ? "added-to-cart" : ""}`}
+                      className="product-button"
                       onClick={() => handleAddToCart(plant)}
                     >
                       Add to Cart
