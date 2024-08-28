@@ -288,11 +288,13 @@ function ProductList() {
   };
 
   const handleAddToCart = (product) => {
-    dispatch(addItem(product));
-    setAddedToCart((prevState) => ({
-      ...prevState,
-      [product.name]: true,
-    }));
+    if (!addedToCart[product.name]) {
+      dispatch(addItem(product));
+      setAddedToCart((prevState) => ({
+        ...prevState,
+        [product.name]: true,
+      }));
+    }
   };
 
   return (
@@ -361,19 +363,18 @@ function ProductList() {
               <div className="product-list">
                 {category.plants.map((plant, plantIndex) => (
                   <div className="product-card" key={plantIndex}>
+                    <div className="product-title">{plant.name}</div>
                     <img
                       className="product-image"
                       src={plant.image}
                       alt={plant.name}
                     />
-                    <div className="product-title">{plant.name}</div>
                     <div className="product-description">
                       {plant.description}
                     </div>
                     <div className="product-price">{plant.cost}</div>
-                    {/*Similarly like the above plant.name show other details like description and cost*/}
                     <button
-                      className="product-button"
+                      className={`product-button ${addedToCart[plant.name] ? "added-to-cart" : ""}`}
                       onClick={() => handleAddToCart(plant)}
                     >
                       Add to Cart
@@ -385,7 +386,10 @@ function ProductList() {
           ))}
         </div>
       ) : (
-        <CartItem onContinueShopping={handleContinueShopping} />
+        <CartItem
+          onContinueShopping={handleContinueShopping}
+          setAddedToCart={setAddedToCart}
+        />
       )}
     </div>
   );

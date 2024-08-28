@@ -30,7 +30,7 @@ export const CartSlice = createSlice({
       } else if (item.quantity === 1 && amount > 0) {
         state.items[index].quantity += amount;
       } else {
-        state.items.splice(index, 1);
+        return;
       }
     },
   },
